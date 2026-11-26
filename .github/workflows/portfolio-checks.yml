@@ -1,0 +1,22 @@
+name: Public evidence checks
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  examples:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - name: Run synthetic examples
+        run: |
+          python3 examples/check_monitoring_demo.py
+          python3 examples/check_observation_contract.py
+          python3 examples/check_historian_quality.py
+          python3 examples/check_telemetry_lab.py
+          python3 examples/check_approval_demo.py
+          python3 examples/equilibrium_demo.py

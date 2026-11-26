@@ -53,6 +53,11 @@ Connect on [GitHub](https://github.com/kamji-mfon).
 - [Evidence and assurance record](technical/assurance.md)
 - [Observation contract and historian examples](technical/observation-evidence.md)
 - [Engineering assurance case](technical/engineering-assurance.md)
+- [Telemetry pipeline and local test evidence](technical/telemetry-pipeline.md)
+- [Synthetic telemetry interface contract](technical/synthetic-interface-v1.md)
+- [Proposed field evidence plan](technical/field-evidence-plan.md)
+- [Security and disclosure](SECURITY.md)
+- [Evidence roadmap](ROADMAP.md)
 - [Public evidence and review process](technical/review-process.md)
 - [Run the synthetic monitoring example](projects/cps-monitoring.md#public-evidence)
 

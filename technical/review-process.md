@@ -14,6 +14,7 @@ From the repository root:
 python3 examples/check_monitoring_demo.py
 python3 examples/check_observation_contract.py
 python3 examples/check_historian_quality.py
+python3 examples/check_telemetry_lab.py
 python3 examples/check_approval_demo.py
 python3 examples/equilibrium_demo.py
 ```

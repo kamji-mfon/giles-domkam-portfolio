@@ -13,10 +13,16 @@ This is an initial cross-property risk analysis, not a certified hazard analysis
 | Collector or host stops | Reliability, resilience, timing | Detect missing data and communicate loss of visibility | Synthetic stale behavior only; detection latency and recovery bounds unmeasured |
 | Sensitive operational data exposed | Privacy, security, business | Minimize data, restrict access, and review public artifacts | Public example uses invented values; actual deployment controls not assessed |
 
+## Proposed consequence-led allocation
+
+For a future field deployment, prioritize resources first around physical harm from incorrect human decisions, then unauthorized or manipulated observations, then recoverability and data confidentiality, subject to the actual hazard analysis. This is an illustrative ordering, not an approved allocation or a quantified risk budget. The operator, site owner, and responsible engineer must determine consequences, tolerances, control owners, and residual-risk acceptance for the particular system.
+
 ## Timing and failure semantics
 
 The public example compares synthetic timestamps against an illustrative maximum age. It does not establish a real-time timing class, clock synchronization accuracy, worst-case execution time, detection latency, or recovery bound. Future timestamps are classified invalid, but that is not a defense against clock spoofing.
 
 For an actual system, identify the clock source, allowable age per decision, timestamp provenance, loss and spoofing threats, detection behavior, backup/holdover, and a safe operating procedure. Those requirements and measurements remain open. No GNSS, PTP, or NTP implementation is claimed.
+
+Possible threats include clock loss, backward steps, misconfiguration, and a malicious or incorrect time source. A proposed response is to detect implausible time or lost synchronization, mark data uncertain, alert the operator, and use an approved holdover or stop relying on time-sensitive outputs. This is a design proposal, not an implemented detection-to-failover guarantee.
 
 The example's failure state is **invalid or stale information**, not a machine safe state. The physical safe state, its owner, and any fail-safe or fail-operational decision depend on the actual equipment and must be established separately.

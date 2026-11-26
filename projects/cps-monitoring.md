@@ -31,6 +31,8 @@ The example distinguishes available, stale, and invalid readings. The check exer
 
 [Observation evidence](../technical/observation-evidence.md) adds independently written examples of a scoped authorization contract and synthetic historian data-quality handling.
 
+[Telemetry pipeline](../technical/telemetry-pipeline.md) documents an additional private-branch test observation, its skipped test and limits, and a separate reproducible offline lab. The [field evidence plan](../technical/field-evidence-plan.md) is proposed work, not a completed pilot.
+
 ## What the private work adds
 
 The private projects include a loopback simulator for selected industrial protocol interactions and file-based telemetry processing. The simulator self-check uses non-fatal assertions and its success message alone is not reliable proof. [The assurance record](../technical/assurance.md) explains the observations and limits. No plant data, machine addresses, private implementation, or customer configuration is included here.
