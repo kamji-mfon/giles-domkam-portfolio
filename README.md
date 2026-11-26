@@ -51,6 +51,8 @@ Connect on [GitHub](https://github.com/kamji-mfon).
 - [CPS architecture and boundaries](technical/cps-architecture.md)
 - [CPS risks, timing, and failure semantics](technical/cps-risks-timing.md)
 - [Evidence and assurance record](technical/assurance.md)
+- [Observation contract and historian examples](technical/observation-evidence.md)
+- [Engineering assurance case](technical/engineering-assurance.md)
 - [Public evidence and review process](technical/review-process.md)
 - [Run the synthetic monitoring example](projects/cps-monitoring.md#public-evidence)
 

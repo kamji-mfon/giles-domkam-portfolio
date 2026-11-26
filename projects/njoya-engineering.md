@@ -38,4 +38,6 @@ The platform assists engineering review. A licensed professional must independen
 
 For the observed local validation run and its limits, see the [assurance record](../technical/assurance.md).
 
+The [engineering assurance case](../technical/engineering-assurance.md) describes selected local sign-off, audit, and citation checks and their limits.
+
 **Project status:** private working platform; selected public description.

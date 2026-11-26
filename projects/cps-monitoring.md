@@ -29,9 +29,11 @@ python3 examples/check_monitoring_demo.py
 
 The example distinguishes available, stale, and invalid readings. The check exercises the threshold boundary, future timestamps, non-finite values, missing data, and invalid configuration. The time values and threshold are synthetic, not operational requirements or measured latency. The example was written for this portfolio and is not an extraction of a private implementation.
 
+[Observation evidence](../technical/observation-evidence.md) adds independently written examples of a scoped authorization contract and synthetic historian data-quality handling.
+
 ## What the private work adds
 
-The private projects include a loopback simulator for selected industrial protocol interactions and file-based telemetry processing. Their self-checks were observed passing in a local working tree; [the assurance record](../technical/assurance.md) explains what those observations do and do not prove. No plant data, machine addresses, private implementation, or customer configuration is included here.
+The private projects include a loopback simulator for selected industrial protocol interactions and file-based telemetry processing. The simulator self-check uses non-fatal assertions and its success message alone is not reliable proof. [The assurance record](../technical/assurance.md) explains the observations and limits. No plant data, machine addresses, private implementation, or customer configuration is included here.
 
 ## Status and limitations
 
