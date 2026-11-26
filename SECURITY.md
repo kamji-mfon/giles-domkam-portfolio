@@ -10,4 +10,6 @@ The public examples do not implement production authentication, network encrypti
 
 ## Reporting
 
-Contact [the repository owner](https://github.com/kamji-mfon) through a private channel listed on the profile before disclosing sensitive information. Do not include credentials, personal data, or confidential plant details in a public issue.
+Report vulnerabilities privately through GitHub's private vulnerability reporting: use **Report a vulnerability** on this repository's [Security tab](https://github.com/kamji-mfon/giles-domkam-portfolio/security/advisories/new). This covers this repository and the linked demonstration builds. Do not open a public issue for a vulnerability, and do not include credentials, personal data, or confidential plant details in any report.
+
+This is a single-maintainer project; no response-time commitment is made.

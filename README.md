@@ -32,6 +32,10 @@ A mobile networking application built around gatherings, mutual consent, and use
 
 **Skills:** TypeScript, React Native, Fastify, PostgreSQL, authentication, product design.
 
+### Live demonstration builds — plant operations and filing console
+
+Three tiers of one web application: [basic](https://diamond-plastics-basic.vercel.app), [intermediate](https://diamond-plastics-intermediate.vercel.app), and [advanced](https://diamond-plastics-advanced.vercel.app). **All data shown is synthetic and labelled as such.** The builds connect to no equipment, transmit no filings, and keep their approval ledger in memory only, so entries do not persist. They demonstrate the interface and approval flow, not a physical data path or production deployment.
+
 ## Additional work
 
 - [Foumban — Architecture and Design Thinking](projects/foumban.md): architectural analogies and cloud patterns.
@@ -63,4 +67,4 @@ Connect on [GitHub](https://github.com/kamji-mfon).
 
 ---
 
-This portfolio describes selected work. Project source, client information, and internal systems are not included. Descriptions summarize capabilities and boundaries; they are not independent certifications or a substitute for professional review.
+This portfolio describes selected work. Project source, client information, and internal systems are not included. Descriptions summarize capabilities and boundaries; they are not independent certifications or a substitute for professional review. All rights reserved; see [LICENSE](LICENSE).
