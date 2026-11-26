@@ -19,3 +19,7 @@ An invented sample is a tuple: `device`, `signal`, `ts`, `value`. The example re
 | Wrong device, future timestamp, invalid value or blank signal | Retain as rejected for review |
 
 An example run is `python3 examples/check_telemetry_lab.py`. The queue and database do not survive restart; the example does not guarantee recovery, model concurrency, or represent a production historian. The data model deliberately omits plant configuration, credentials, client data, and proprietary calculation rules.
+
+## Versioned record schema
+
+`examples/reading_schema.py` adds a dictionary form of the same reading with a `schema` field of the form `MAJOR.MINOR`. Version `1.0` requires `device`, `signal`, `ts` (integer) and `value` (finite number). Version `1.1` adds an optional `unit` string. The compatibility rule: a reader accepts a record only when the major versions match and the record's minor is no newer than the reader's; a minor may only add optional fields, and any removal, rename or type change needs a new major. Unknown fields are rejected rather than ignored, so a reader never silently drops data it does not understand. `python3 examples/check_reading_schema.py` checks the rule, including rejection of a `2.0` record and of a `1.1` record by a `1.0` reader. This is a synthetic example, not the schema of a deployed system.

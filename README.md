@@ -6,6 +6,13 @@ I build engineering software, AI operations tools, and applications that bring t
 
 **Focus:** structural analysis · Python · TypeScript · AI tooling · full-stack applications · verification and auditability
 
+## Current CPS project at a glance
+
+- **Problem:** small industrial machines, such as a plastic-recycling crusher, often run with no monitoring. A supervisor cannot see remotely whether the motor is running or overloaded, and an old reading shown as current is worse than none.
+- **Solution (proposed design):** a read-only retrofit monitor. A clamp-on current sensor and a pulley speed sensor feed a small edge box; readings are validated, checked for clock trust, and shown as stale after 60 s. It has no path to machine control. Public synthetic examples implement the rules ([risks and timing](technical/cps-risks-timing.md)).
+- **Status:** design stage. Synthetic examples run in CI. No field data, pilot result, customer deployment or independent review exists yet. The first read-only install is targeted for mid-December 2026, subject to written site authorization and confirmed anchoring ([roadmap](ROADMAP.md), [comparables](technical/comparables.md)).
+- **Contact:** [udoka.the.afrikan@gmail.com](mailto:udoka.the.afrikan@gmail.com) or [GitHub](https://github.com/kamji-mfon). Demo: the synthetic web builds below, or run the checks in [the review process](technical/review-process.md).
+
 ## Featured work
 
 ### [Industrial Monitoring — CPS Case Study](projects/cps-monitoring.md)
@@ -48,7 +55,7 @@ Structural and computational engineering · AEC technology · AI systems · appl
 
 B.S. Civil Engineering · California Engineer-in-Training (EIT)
 
-Connect on [GitHub](https://github.com/kamji-mfon).
+Contact: [udoka.the.afrikan@gmail.com](mailto:udoka.the.afrikan@gmail.com) · [GitHub](https://github.com/kamji-mfon).
 
 ## Technical evidence
 
@@ -62,6 +69,7 @@ Connect on [GitHub](https://github.com/kamji-mfon).
 - [Proposed field evidence plan](technical/field-evidence-plan.md)
 - [Security and disclosure](SECURITY.md)
 - [Evidence roadmap](ROADMAP.md)
+- [Comparable products](technical/comparables.md)
 - [Public evidence and review process](technical/review-process.md)
 - [Run the synthetic monitoring example](projects/cps-monitoring.md#public-evidence)
 
