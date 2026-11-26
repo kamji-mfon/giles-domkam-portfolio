@@ -22,11 +22,17 @@ jobs:
           python3 examples/check_telemetry_lab.py
           python3 examples/check_approval_demo.py
           python3 examples/equilibrium_demo.py
+          python3 examples/check_clock_trust.py
+          python3 examples/check_degraded_mode.py
+          python3 examples/check_reading_schema.py
+      - name: Measure example resource use
+        run: python3 examples/check_resource_use.py
       - name: Branch coverage of example logic
         run: |
           python3 -m pip install --quiet "coverage==7.10.7"
           for f in check_monitoring_demo check_observation_contract check_historian_quality \
-                   check_telemetry_lab check_approval_demo equilibrium_demo; do
+                   check_telemetry_lab check_approval_demo equilibrium_demo \
+                   check_clock_trust check_degraded_mode check_reading_schema; do
             python3 -m coverage run --branch --append --source=examples "examples/$f.py" > /dev/null
           done
           python3 -m coverage report -m --omit='examples/check_*' --fail-under=85

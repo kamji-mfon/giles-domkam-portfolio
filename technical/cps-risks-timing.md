@@ -15,6 +15,26 @@ This is an initial cross-property risk analysis, not a certified hazard analysis
 
 Roles are the parties who would own each control in a real deployment; no named person or organization has accepted them. Residual risk cannot be rated until severity, exposure, and tolerances are set for an actual system.
 
+## Draft qualitative risk budget (for approval, not approved)
+
+**Status: DRAFT, prepared 2026-11-26.** The scales below are proposed. Severity and tolerance ratings are entered only by the owner (Giles Domkam) and must be approved by the site owner before the sensor install; until both have done so the budget is not in force and gate G3 is unmet. The drafter has not set any rating.
+
+Severity scale (proposed): **S1** information inconvenience only; **S2** lost production time or rework; **S3** equipment damage or injury needing first aid; **S4** serious injury.
+
+Tolerance scale (proposed): **Unacceptable**, resolve before install; **Tolerable**, accept with the listed controls and review after the first 14 days of data; **Acceptable**, no action beyond monitoring.
+
+| Scenario | Severity | Tolerance | Owner rating | Site-owner approval |
+|---|---|---|---|---|
+| Old reading appears current during an overload | PENDING | PENDING | PENDING | PENDING |
+| Missing, non-finite, or future-dated input | PENDING | PENDING | PENDING | PENDING |
+| Unauthorized device access | PENDING | PENDING | PENDING | PENDING |
+| False or manipulated observations | PENDING | PENDING | PENDING | PENDING |
+| Collector or host stops | PENDING | PENDING | PENDING | PENDING |
+| Sensitive operational data exposed | PENDING | PENDING | PENDING | PENDING |
+| Sensor installation near the running machine before anchoring and guarding are confirmed | PENDING | PENDING | PENDING | PENDING |
+
+No sensor may be connected before written site authorization and confirmed anchoring, whatever the ratings.
+
 ## Proposed consequence-led allocation
 
 For a future field deployment, prioritize resources first around physical harm from incorrect human decisions, then unauthorized or manipulated observations, then recoverability and data confidentiality, subject to the actual hazard analysis. This is an illustrative ordering, not an approved allocation or a quantified risk budget. The operator, site owner, and responsible engineer must determine consequences, tolerances, control owners, and residual-risk acceptance for the particular system.
@@ -31,13 +51,36 @@ Not applicable to this classification, and not tested: interrupt service routine
 
 | Threat | Effect on the monitor | Proposed detection | Proposed response | Status |
 |---|---|---|---|---|
-| Edge clock not synchronized after power loss (no RTC) | Readings carry wrong timestamps; fresh data may look stale or old data current | Compare edge time with ingest receipt time; flag sync state | Mark readings time-uncertain; do not show as current | Clock source of a real edge device NOT ESTABLISHED |
-| Clock steps backward | Duplicate or out-of-order timestamps | Reject non-increasing timestamps per signal | Hold readings for review | Synthetic future-timestamp rejection only; backward-step handling not public |
+| Edge clock not synchronized after power loss (no RTC) | Readings carry wrong timestamps; fresh data may look stale or old data current | Compare edge time with ingest receipt time | Mark readings time-uncertain; do not show as current | Offset flag demonstrated on synthetic input by `check_clock_trust.py`; clock source of a real edge device NOT ESTABLISHED |
+| Clock steps backward | Duplicate or out-of-order timestamps | Reject non-increasing timestamps per signal | Reject; monitor enters degraded mode | Demonstrated on synthetic input by `check_clock_trust.py` and `check_degraded_mode.py` |
 | Clock runs fast (future-dated readings) | Reading appears fresher than it is | Reject timestamps later than receiver time | Classify invalid | Demonstrated on synthetic input by `check_monitoring_demo.py` and `check_telemetry_lab.py` |
 | Malicious or misconfigured time server | Coordinated wrong time across devices | Cross-check independent sources; alert on large offsets | Stop relying on time-sensitive outputs; operator alert | Design proposal; no NTP/PTP/GNSS implementation claimed |
 | Ingest host clock wrong | Freshness decisions wrong for every device | Monitor host sync state | Alert maintainer; mark status uncertain | Not demonstrated |
 
-Allowable reading age per decision, clock accuracy, and holdover duration are open requirements for an actual site and are not set here.
+Allowable reading age is set for one decision (see [freshness requirement](#freshness-requirement-f-1)). Clock accuracy, the edge-to-ingest offset limit for a real device, and holdover duration remain open requirements for the actual site.
+
+### Freshness requirement F-1
+
+**Owner requirement, set 2026-11-26.** A reading older than 60 s at the time it is displayed must be shown as stale, never as current.
+
+- **Decision supported:** a supervisor's load and overload watch on the crusher motor, that is, whether to go to the machine. It is an information aid, not a protective function. Motor overload protection and emergency stopping must remain independent of this monitor and are owned by the site.
+- **Owner:** Giles Domkam, software maintainer, owns this requirement and its implementation. The site owner owns the physical installation and any machine safety function.
+- **Evidence:** demonstrated on synthetic input by `examples/check_clock_trust.py`, including the 60 s boundary (60 s current, 61 s stale) and readings that arrive already stale. Not measured on hardware: end-to-end latency from sensor to display, and the accuracy of the clocks that stamp and judge age, are NOT ESTABLISHED.
+
+### Clock trust and degraded mode
+
+`examples/clock_trust.py` classifies each synthetic reading per signal: **rejected** (invalid, repeated, or backward timestamp), **time-uncertain** (edge timestamp differs from ingest receipt time by more than a configurable offset, or receipt is later than the host clock), **stale** (older than 60 s), or **current**. Only current and stale readings advance the per-signal timestamp, so one future-dated reading cannot lock out later correct ones. The offset value used in the checks (2 s) is illustrative, not a site requirement.
+
+`examples/degraded_mode.py` is an explicit state machine with a total transition table, checked by `check_degraded_mode.py`:
+
+| Mode | Entered when | Display rule |
+|---|---|---|
+| no-visibility | Start-up, or no trusted reading within 60 s | No current data; check the machine in person |
+| degraded | A reading is rejected or time-uncertain | Value withheld |
+| recovering | Current readings resume after degraded or no-visibility | Value shown, labelled not yet trusted |
+| normal | 3 consecutive current readings (illustrative tuning value) | Value shown as current |
+
+Only `normal` presents a value as current. An unknown mode or event raises an error rather than falling through. These modes describe the monitor's information state; they are not machine safe states.
 
 ### Synthetic example behavior
 
