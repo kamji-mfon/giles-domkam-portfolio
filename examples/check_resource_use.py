@@ -1,10 +1,11 @@
 """Measure wall time, CPU time and peak memory of each public example check.
 
 Run from the repository root: python3 examples/check_resource_use.py
-Method: each script runs RUNS times as a child process; os.wait4 returns that
-child's own rusage. Wall time includes interpreter start-up. Peak RSS is
-ru_maxrss of the child. Limits below are smoke thresholds for this CI job, not
-requirements of any edge device.
+Method: each script runs RUNS times in a child interpreter via runpy; os.wait4
+returns that child's CPU time. Wall time includes interpreter start-up. Peak
+memory is reported by the child itself: VmHWM on Linux, ru_maxrss on macOS.
+Limits below are smoke thresholds for this CI job, not requirements of any
+edge device.
 """
 
 import os
@@ -19,6 +20,19 @@ RUNS = 5
 WALL_LIMIT_S = 5.0
 RSS_LIMIT_KIB = 100 * 1024
 
+# On Linux the parent's ru_maxrss survives into a spawned child across exec, so the
+# child reads its own per-process high-water mark instead.
+CHILD = """
+import runpy, sys
+runpy.run_path(sys.argv[1], run_name="__main__")
+if sys.platform == "linux":
+    kib = next(int(l.split()[1]) for l in open("/proc/self/status") if l.startswith("VmHWM:"))
+else:
+    import resource
+    kib = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss // 1024  # macOS reports bytes
+print(kib)
+"""
+
 HERE = Path(__file__).resolve().parent
 SCRIPTS = sorted(p for p in HERE.glob("check_*.py") if p.name != Path(__file__).name)
 SCRIPTS.append(HERE / "equilibrium_demo.py")
@@ -26,14 +40,14 @@ SCRIPTS.append(HERE / "equilibrium_demo.py")
 
 def run_once(script):
     start = time.perf_counter()
-    child = subprocess.Popen([sys.executable, str(script)], cwd=HERE, stdout=subprocess.DEVNULL)
+    child = subprocess.Popen([sys.executable, "-c", CHILD, str(script)], cwd=HERE, stdout=subprocess.PIPE)
+    out = child.stdout.read()
+    child.stdout.close()
     _, status, usage = os.wait4(child.pid, 0)
     wall = time.perf_counter() - start
     child.returncode = os.waitstatus_to_exitcode(status)
     assert child.returncode == 0, f"{script.name} exited {child.returncode}"
-    # Linux reports ru_maxrss in KiB, macOS in bytes.
-    rss_kib = usage.ru_maxrss // 1024 if sys.platform == "darwin" else usage.ru_maxrss
-    return wall, usage.ru_utime + usage.ru_stime, rss_kib
+    return wall, usage.ru_utime + usage.ru_stime, int(out.split()[-1])
 
 
 def main():

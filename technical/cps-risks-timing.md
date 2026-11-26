@@ -17,21 +17,21 @@ Roles are the parties who would own each control in a real deployment; no named 
 
 ## Draft qualitative risk budget (for approval, not approved)
 
-**Status: DRAFT, prepared 2026-11-26.** The scales below are proposed. Severity and tolerance ratings are entered only by the owner (Giles Domkam) and must be approved by the site owner before the sensor install; until both have done so the budget is not in force and gate G3 is unmet. The drafter has not set any rating.
+**Status: DRAFT, 2026-11-26.** The owner (Giles Domkam) proposed the ratings below on 2026-11-26. They must be approved by the site owner before the sensor install; until then the budget is not in force and gate G3 is unmet. The S2 ratings assume the site keeps motor overload protection and emergency stopping independent of this monitor; if that assumption fails, the ratings must be redone.
 
 Severity scale (proposed): **S1** information inconvenience only; **S2** lost production time or rework; **S3** equipment damage or injury needing first aid; **S4** serious injury.
 
 Tolerance scale (proposed): **Unacceptable**, resolve before install; **Tolerable**, accept with the listed controls and review after the first 14 days of data; **Acceptable**, no action beyond monitoring.
 
-| Scenario | Severity | Tolerance | Owner rating | Site-owner approval |
-|---|---|---|---|---|
-| Old reading appears current during an overload | PENDING | PENDING | PENDING | PENDING |
-| Missing, non-finite, or future-dated input | PENDING | PENDING | PENDING | PENDING |
-| Unauthorized device access | PENDING | PENDING | PENDING | PENDING |
-| False or manipulated observations | PENDING | PENDING | PENDING | PENDING |
-| Collector or host stops | PENDING | PENDING | PENDING | PENDING |
-| Sensitive operational data exposed | PENDING | PENDING | PENDING | PENDING |
-| Sensor installation near the running machine before anchoring and guarding are confirmed | PENDING | PENDING | PENDING | PENDING |
+| Scenario | Severity (owner proposal) | Tolerance (owner proposal) | Site-owner approval |
+|---|---|---|---|
+| Old reading appears current during an overload | S2 | Tolerable | PENDING |
+| Missing, non-finite, or future-dated input | S2 | Tolerable | PENDING |
+| Unauthorized device access | S2 | Tolerable | PENDING |
+| False or manipulated observations | S2 | Tolerable | PENDING |
+| Collector or host stops | S2 | Tolerable | PENDING |
+| Sensitive operational data exposed | S2 | Tolerable | PENDING |
+| Sensor installation near the running machine before anchoring and guarding are confirmed | S4 | Unacceptable | PENDING |
 
 No sensor may be connected before written site authorization and confirmed anchoring, whatever the ratings.
 

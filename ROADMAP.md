@@ -5,7 +5,7 @@ Dated targets set by the owner on 2026-11-26. These are targets, not commitments
 | Stage | Owner | Target | Success criterion | Status |
 |---|---|---|---|---|
 | Public synthetic examples | Giles Domkam | Done | Nine documented checks run in CI on every push, with branch coverage, resource measurement and a secret scan | Available; see [checks](technical/review-process.md) |
-| Risk budget ratings | Giles Domkam rates; site owner approves | Before sensor install | Every scenario in the [draft risk budget](technical/cps-risks-timing.md#draft-qualitative-risk-budget-for-approval-not-approved) has a severity, tolerance and site-owner approval | Draft scales published; ratings pending |
+| Risk budget ratings | Giles Domkam rates; site owner approves | Before sensor install | Every scenario in the [draft risk budget](technical/cps-risks-timing.md#draft-qualitative-risk-budget-for-approval-not-approved) has an owner-proposed severity and tolerance and site-owner approval | Owner ratings proposed 2026-11-26; site-owner approval pending |
 | Site preconditions | Site owner | Before sensor install | Written permission to install, machine anchoring confirmed, emergency stop and guarding confirmed | Questions sent; no answer recorded |
 | Read-only sensor install | Site owner (physical install); Giles Domkam (software) | Mid-December 2026 | Clamp-on current sensor and pulley speed sensor feed an edge box; nothing connects to machine control; first readings received | Not started |
 | First read-only data | Giles Domkam | 2027-01-15 | 14 days of read-only data received; gaps, stale periods and time-uncertain readings counted against the 60 s freshness rule; results published as a first-party observation with limits | Not started |
