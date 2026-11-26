@@ -30,6 +30,12 @@ Structural and computational engineering · Python · frame analysis · engineer
 
 The work distinguishes checks against hand calculations from comparisons with independent published examples. Validation is specific to the calculation and use case; a tested example does not validate every module. Structural work is implemented, while other disciplines and integrations have differing levels of completeness.
 
-The platform assists engineering review. A licensed professional must independently verify and seal work when required. No sample result, licensed standards text, client information, or calculation engine is included in this public case study.
+The platform assists engineering review. A licensed professional must independently verify and seal work when required. No licensed standards text, client information, or calculation engine is included in this public case study.
+
+## Runnable synthetic illustration
+
+`python3 examples/equilibrium_demo.py` illustrates equilibrium for a fictional symmetric point load. This newly written example is not an extracted calculation engine, code compliance check, design, or independently validated model.
+
+For the observed local validation run and its limits, see the [assurance record](../technical/assurance.md).
 
 **Project status:** private working platform; selected public description.

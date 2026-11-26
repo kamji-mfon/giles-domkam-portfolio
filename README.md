@@ -8,6 +8,12 @@ I build engineering software, AI operations tools, and applications that bring t
 
 ## Featured work
 
+### [Industrial Monitoring — CPS Case Study](projects/cps-monitoring.md)
+
+A sanitized monitoring scenario that connects physical data, validation, and human decisions. Includes a runnable synthetic example, architecture boundaries, risk analysis, and an assurance record.
+
+**Skills:** industrial telemetry, systems architecture, failure analysis, Python, evidence-led design.
+
 ### [Njoya Engineering — Computational Design](projects/njoya-engineering.md)
 
 Engineering calculation software designed to connect results with inputs, methods, code references, and human review.
@@ -39,6 +45,14 @@ Structural and computational engineering · AEC technology · AI systems · appl
 B.S. Civil Engineering · California Engineer-in-Training (EIT)
 
 Connect on [GitHub](https://github.com/kamji-mfon).
+
+## Technical evidence
+
+- [CPS architecture and boundaries](technical/cps-architecture.md)
+- [CPS risks, timing, and failure semantics](technical/cps-risks-timing.md)
+- [Evidence and assurance record](technical/assurance.md)
+- [Public evidence and review process](technical/review-process.md)
+- [Run the synthetic monitoring example](projects/cps-monitoring.md#public-evidence)
 
 ---
 

@@ -28,4 +28,10 @@ Python · AI tool integration · voice interfaces · service design · local dat
 
 Jarvis is designed for a single operator. This page is a high-level description, not a claim that every possible action or integration has been independently audited. Private memory, communications, credentials, and operating data are not part of this portfolio.
 
+For the observed local confirmation checks and their limits, see the [assurance record](../technical/assurance.md).
+
+## Runnable synthetic illustration
+
+`python3 examples/approval_demo.py` and `python3 examples/check_approval_demo.py` demonstrate a single-use decision using only an in-memory action. This is a new illustrative example, not Jarvis's implementation or evidence that every action path is gated.
+
 **Project status:** private working system; selected public description.
