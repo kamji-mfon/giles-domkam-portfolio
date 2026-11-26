@@ -11,4 +11,10 @@ if __name__ == "__main__":
     load = 10  # Fictional point load at midspan; force units are consistent.
     left, right = reactions(load)
     assert left + right == load
+    for bad in (-1, float("inf"), True, "10"):
+        try:
+            reactions(bad)
+        except ValueError:
+            continue
+        raise AssertionError(f"invalid load accepted: {bad!r}")
     print(f"Synthetic load: {load}; reactions: {left}, {right}; equilibrium: {left + right == load}")

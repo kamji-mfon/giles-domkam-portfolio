@@ -14,4 +14,11 @@ except ValueError:
     pass
 else:
     raise AssertionError("missing required columns were accepted")
+for now, max_age in ((100.0, 5), (100, -1), (100, True)):
+    try:
+        classify_csv(data, now, max_age)
+    except ValueError:
+        pass
+    else:
+        raise AssertionError(f"invalid clock arguments were accepted: {now!r}, {max_age!r}")
 print("Synthetic historian quality checks passed")
