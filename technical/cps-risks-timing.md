@@ -96,7 +96,7 @@ The example's failure state is **invalid or stale information**, not a machine s
 
 ## Measured resource use of the public examples
 
-**Reproducible public test, CI runner only.** Measured by `examples/check_resource_use.py` in [workflow run 45891931259](https://github.com/kamji-mfon/giles-domkam-portfolio/actions/runs/45891931259) on commit `543e060`: GitHub-hosted `ubuntu-latest`, Python 3.14.4, Linux x86_64, 4 CPUs. Method: each script runs five times in a child interpreter; wall time (`time.perf_counter`, includes interpreter start-up) and CPU time (user plus system, from `os.wait4`) are medians; peak memory is the largest per-process `VmHWM` reported by the child. Shared-runner noise is not controlled, so treat differences of a few milliseconds as noise.
+**Reproducible public test, CI runner only.** Measured by `examples/check_resource_use.py` in [workflow run 45891931259](https://github.com/kamji-mfon/giles-domkam-portfolio/actions/runs/45891931259) on commit `543e060` (merged to main as `0343c46` with an identical tree): GitHub-hosted `ubuntu-latest`, Python 3.14.4, Linux x86_64, 4 CPUs. Method: each script runs five times in a child interpreter; wall time (`time.perf_counter`, includes interpreter start-up) and CPU time (user plus system, from `os.wait4`) are medians; peak memory is the largest per-process `VmHWM` reported by the child. Shared-runner noise is not controlled, so treat differences of a few milliseconds as noise.
 
 | Script | Median wall (ms) | Median CPU (ms) | Peak RSS (KiB) |
 |---|---:|---:|---:|
