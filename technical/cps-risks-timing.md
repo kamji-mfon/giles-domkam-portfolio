@@ -91,3 +91,21 @@ For an actual system, identify the clock source, allowable age per decision, tim
 Possible threats include clock loss, backward steps, misconfiguration, and a malicious or incorrect time source. A proposed response is to detect implausible time or lost synchronization, mark data uncertain, alert the operator, and use an approved holdover or stop relying on time-sensitive outputs. This is a design proposal, not an implemented detection-to-failover guarantee.
 
 The example's failure state is **invalid or stale information**, not a machine safe state. The physical safe state, its owner, and any fail-safe or fail-operational decision depend on the actual equipment and must be established separately.
+
+## Measured resource use of the public examples
+
+**Reproducible public test, CI runner only.** Measured by `examples/check_resource_use.py` in [workflow run 45890906382](https://github.com/kamji-mfon/giles-domkam-portfolio/actions/runs/45890906382) on commit `47420d3`: GitHub-hosted `ubuntu-latest`, Python 3.14.4, Linux x86_64, 4 CPUs. Method: each script runs five times in a child interpreter; wall time (`time.perf_counter`, includes interpreter start-up) and CPU time (user plus system, from `os.wait4`) are medians; peak memory is the largest per-process `VmHWM` reported by the child. Shared-runner noise is not controlled, so treat differences of a few milliseconds as noise.
+
+| Script | Median wall (ms) | Median CPU (ms) | Peak RSS (KiB) |
+|---|---:|---:|---:|
+| check_approval_demo.py | 19 | 18 | 10952 |
+| check_clock_trust.py | 19 | 19 | 11368 |
+| check_degraded_mode.py | 19 | 19 | 11152 |
+| check_historian_quality.py | 24 | 24 | 12484 |
+| check_monitoring_demo.py | 24 | 24 | 12152 |
+| check_observation_contract.py | 20 | 20 | 11476 |
+| check_reading_schema.py | 19 | 19 | 11520 |
+| check_telemetry_lab.py | 21 | 21 | 12944 |
+| equilibrium_demo.py | 19 | 19 | 11164 |
+
+The job fails if any check exceeds 5 s median wall time or 100 MiB peak memory; those are smoke thresholds, not requirements. These figures say nothing about the edge box: its CPU, memory, power and sensor-to-display latency are NOT ESTABLISHED until measured on the installed hardware. Every CI run republishes the table in its job summary.
