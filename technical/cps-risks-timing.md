@@ -75,6 +75,32 @@ Allowable reading age is set for one decision (see [freshness requirement](#fres
 
 `examples/degraded_mode.py` is an explicit state machine with a total transition table, checked by `check_degraded_mode.py`:
 
+### Failure states — synthetic model
+
+```mermaid
+stateDiagram-v2
+    [*] --> NoVisibility
+    NoVisibility: No visibility
+    Degraded: Degraded
+    Recovering: Recovering
+    Normal: Normal
+    NoVisibility --> NoVisibility: stale or rejected
+    NoVisibility --> Degraded: time-uncertain
+    NoVisibility --> Recovering: current
+    Degraded --> Degraded: rejected or time-uncertain
+    Degraded --> NoVisibility: stale
+    Degraded --> Recovering: current
+    Recovering --> Recovering: current, streak below threshold
+    Recovering --> Normal: current, streak reaches threshold
+    Recovering --> Degraded: rejected or time-uncertain
+    Recovering --> NoVisibility: stale
+    Normal --> Normal: current
+    Normal --> Degraded: rejected or time-uncertain
+    Normal --> NoVisibility: stale
+```
+
+The synthetic model begins with no visibility. Current readings start recovery; the configured consecutive-reading threshold returns the model to normal. Stale readings lead to no visibility, and rejected or time-uncertain readings lead to degraded mode except that rejection while already without visibility leaves it there. Only normal is labeled current. These are information states, not physical safe states. Reproduce the behavior with `python3 examples/check_degraded_mode.py` and `python3 examples/check_clock_trust.py`; no field timing is implied.
+
 | Mode | Entered when | Display rule |
 |---|---|---|
 | no-visibility | Start-up, or no trusted reading within 60 s | No current data; check the machine in person |
@@ -86,7 +112,7 @@ Only `normal` presents a value as current. An unknown mode or event raises an er
 
 ### Synthetic example behavior
 
-The public example compares synthetic timestamps against an illustrative maximum age. It does not establish a real-time timing class, clock synchronization accuracy, worst-case execution time, detection latency, or recovery bound. Future timestamps are classified invalid, but that is not a defense against clock spoofing.
+The public example compares synthetic timestamps against the owner-set maximum age. It does not establish clock synchronization accuracy, worst-case execution time, detection latency, or a field recovery bound. Its proposed non-real-time classification is not a measured result. Timestamp checks alone are not a defense against clock spoofing.
 
 For an actual system, identify the clock source, allowable age per decision, timestamp provenance, loss and spoofing threats, detection behavior, backup/holdover, and a safe operating procedure. Those requirements and measurements remain open. No GNSS, PTP, or NTP implementation is claimed.
 

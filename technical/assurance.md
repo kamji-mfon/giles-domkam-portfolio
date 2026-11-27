@@ -4,6 +4,20 @@
 
 Evidence types matter: a self-test is not an independent audit, simulation is not field validation, and a test of one path does not establish the behavior of an entire system.
 
+## Evidence map — synthetic freshness
+
+```mermaid
+flowchart LR
+    Claim["Claim: synthetic stale data<br/>is not displayed as current"] --> Requirement["F-1: owner-set<br/>data-age rule"]
+    Requirement --> Check["Clock and degraded-mode checks"]
+    Check --> CI["Public CI executes checks"]
+    CI --> Limit["Limit: no field latency,<br/>clock accuracy or hardware proof"]
+```
+
+The claim is limited to the separately tested synthetic clock and state-machine examples. The [freshness requirement](cps-risks-timing.md#freshness-requirement-f-1) defines the data-age rule; `examples/check_clock_trust.py` and `examples/check_degraded_mode.py` exercise selected behavior; the [public workflow](../.github/workflows/portfolio-checks.yml) runs those checks. They do not demonstrate integrated deployment or prove physical safety. Consult the actual workflow run for its result rather than treating this diagram as a passing badge.
+
+## Evidence register
+
 | Claim | Evidence available | Limit |
 |---|---|---|
 | The public example distinguishes fresh, stale, and invalid synthetic readings | Run `python3 examples/check_monitoring_demo.py` | Illustrative implementation only; no hardware, clock security, or control path |

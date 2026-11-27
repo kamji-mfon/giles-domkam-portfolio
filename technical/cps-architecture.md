@@ -23,6 +23,27 @@ Crusher pulley ──────── inductive speed sensor ──┤ (no ele
 
 The monitor ends at a person. It has no path to start, stop or adjust the machine.
 
+## Trust boundaries — proposed design
+
+```mermaid
+flowchart LR
+    subgraph Site["Physical site — not field-verified"]
+        Machine["Machine"] --> Sensors["Proposed sensors"]
+        Sensors --> Edge["Proposed edge monitor"]
+    end
+    subgraph Service["Ingest boundary — proposed"]
+        Verify["Verify integrity and schema"] --> Clock["Check clock and freshness"]
+    end
+    subgraph Human["Human decision boundary"]
+        Display["Status display — proposed"] --> Person["Supervisor"]
+    end
+    Edge -->|"Proposed uplink"| Verify
+    Clock -->|"Classified information"| Display
+    Person --> Procedure["Separate site procedures"]
+```
+
+The physical site, uplink, ingest, display, and human decision each cross a distinct responsibility boundary. Public examples test selected integrity, schema, and clock rules using synthetic data; they do not establish real device identity, key provisioning, transport security, equipment behavior, or human response. The complete crossing requirements and gaps are in the table below. The monitor does not issue control commands.
+
 ## Boundaries and composition
 
 | Crossing | Information | Required property | Public evidence | Gap |
@@ -35,7 +56,7 @@ The monitor ends at a person. It has no path to start, stop or adjust the machin
 | Display → supervisor | Status with age | Supervisor can tell current, stale, withheld and no-data apart | Display labels in `degraded_mode.py` | No user interface or human-factors test |
 | Supervisor → machine | Human action under site procedures | Independent overload protection and emergency stop | Outside the monitor by design | Site confirmation of emergency stop and guarding pending |
 
-**Composition.** Failures combine as follows. An uplink outage fills the edge buffer, and the oldest readings are dropped and counted. Readings that arrive late are classified stale on arrival and do not restore `normal` mode until three consecutive current readings arrive. A clock fault makes readings time-uncertain and keeps the monitor in `degraded`. A forged or replayed reading is refused before it reaches clock checks. The worst combined outcome is that the display shows no current data. A wrong current value shown as current is guarded against only in the synthetic examples.
+**Composition.** The synthetic examples separately model an uplink outage with counted buffer drops, stale readings, clock faults, and refused forged or replayed readings. Their intended composition is to withhold untrusted information and recover only after consecutive current readings; the components are **not tested end to end**. These examples do not establish the worst possible combined outcome or prove that a wrong value cannot be shown as current.
 
 ## Aspects and facets
 
@@ -66,7 +87,7 @@ The monitor ends at a person. It has no path to start, stop or adjust the machin
 | Decision | Chosen | Alternative | Why, and what it costs |
 |---|---|---|---|
 | Control authority | Read-only; no actuation | Let the monitor trip the motor on overload | Avoids making the monitor a safety function. Cost: the monitor cannot prevent damage, only inform |
-| Freshness limit | 60 s (owner requirement) | Shorter, e.g. 5 s | Matches a human walking to the machine. Cost: an overload can run up to 60 s before its reading is called stale |
+| Freshness limit | 60 s (owner requirement) | Shorter, e.g. 5 s | Allows older observations to remain labeled current for longer. This is a data-age rule, not an overload-detection deadline; detection latency is not established |
 | Recovery | 3 consecutive current readings before `normal` | Trust the first good reading | Avoids flicker after a fault. Cost: slower to show `normal` after recovery |
 | Unknown schema fields | Reject | Ignore | Never silently drops data the reader does not understand. Cost: the edge box cannot add a field before ingest is upgraded |
 | Integrity | HMAC with a shared per-device key | Public-key signatures | Standard library and cheap on small hardware. Cost: ingest holds keys that could forge readings; key storage on both ends matters |
