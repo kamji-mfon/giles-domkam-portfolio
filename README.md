@@ -13,6 +13,21 @@ I build engineering software, AI operations tools, and applications that bring t
 - **Status:** design stage. Synthetic examples run in CI. No field data, pilot result, customer deployment or independent review exists yet. The first read-only install is targeted for mid-December 2026, subject to written site authorization and confirmed anchoring ([roadmap](ROADMAP.md), [comparables](technical/comparables.md)).
 - **Contact:** [udoka.the.afrikan@gmail.com](mailto:udoka.the.afrikan@gmail.com) or [GitHub](https://github.com/kamji-mfon). Demo: the synthetic web builds below, or run the checks in [the review process](technical/review-process.md).
 
+### System context — proposed design
+
+```mermaid
+flowchart LR
+    Machine["Physical machine"] --> Sensors["Current and speed sensors"]
+    Sensors --> Edge["Edge monitor"]
+    Edge --> Ingest["Ingest and status"]
+    Ingest --> Display["Status display"]
+    Display --> Supervisor["Supervisor"]
+    Supervisor --> Procedure["Site procedures"]
+    Protection["Independent machine protection<br/>site confirmation pending"] -.-> Machine
+```
+
+The proposed monitor observes and informs a person; it has no machine-control path. Independent machine protection is a site responsibility and has not been confirmed. The physical installation and display are **proposed**; selected software behavior is **synthetically tested**; field performance is **not established**. See the [trust-boundary view](technical/cps-architecture.md#trust-boundaries--proposed-design), [failure-state view](technical/cps-risks-timing.md#failure-states--synthetic-model), and [evidence map](technical/assurance.md#evidence-map--synthetic-freshness).
+
 ## Featured work
 
 ### [Industrial Monitoring — CPS Case Study](projects/cps-monitoring.md)
